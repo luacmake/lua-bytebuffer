@@ -66,6 +66,13 @@ static int _length(lua_State *L)
     return 1;
 }
 
+static int _tostring(lua_State *L)
+{
+    packet_t *self = check_packet();
+    lua_pushlstring(L, self->data, self->pos - self->data);
+    return 1;
+}
+
 static packet_t *check_read_packet(lua_State *L, size_t size)
 {
     packet_t *self = check_packet();
@@ -403,6 +410,7 @@ LUALIB_API int luaopen_packet_core(lua_State *L)
         {"new", _new},
         {"__gc", _gc},
         {"__len", _length},
+        {"__tostring", _tostring},
         {"read_ubyte", _read_ubyte},
         {"write_ubyte", _write_ubyte},
         {"read_ushort", _read_ushort},
