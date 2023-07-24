@@ -283,7 +283,7 @@ static int l_read_bytes(lua_State *L)
 static int l_write_bytes(lua_State *L)
 {
     void *curr = (void *)current_position(L);
-    const char *src = (const char *)lua_touserdata(L, 2);
+    const char *src = (const char *)luaL_checkudata(L, 2, LUA_BYTEBUFFER);
     size_t len = (size_t)lua_rawlen(L, 2);
     check_and_advance_for_write(L, len);
     memcpy(curr, (const void *)src, len);
